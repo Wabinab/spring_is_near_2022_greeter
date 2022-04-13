@@ -11,6 +11,8 @@
   </head>
 
   <body>
+    <%= render 'layouts/header' %>
+
     <%= javascript_tag "javascript::initContract(#{Rails.env})" %>
     <%= yield %>
   </body>
