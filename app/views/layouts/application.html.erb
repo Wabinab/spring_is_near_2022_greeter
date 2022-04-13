@@ -11,6 +11,7 @@
   </head>
 
   <body>
+    <%= javascript_tag "javascript::initContract(#{Rails.env})" %>
     <%= yield %>
   </body>
 </html>
