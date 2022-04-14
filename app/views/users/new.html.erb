@@ -1,0 +1,10 @@
+<h1>Please Login then click the button below after that.</h1>
+
+<%= form_with model: @user, local: true do |f| %>
+  <%= f.hidden_field :account_id , value: params[:account_id] %>
+  <%= f.hidden_field :public_key, value: params[:public_key] %>
+  <%= f.hidden_field :all_keys, value: params[:all_keys] %>
+  <%= f.submit "(TEMPORARILY A MUST) Save key to database", class: "btn btn-primary" %>
+<% end %>
+
+<p><%= @myparam %></p>
