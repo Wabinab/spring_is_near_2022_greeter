@@ -30,3 +30,5 @@ pin "text-encoding-utf-8", to: "https://ga.jspm.io/npm:text-encoding-utf-8@1.0.2
 pin "toidentifier", to: "https://ga.jspm.io/npm:toidentifier@1.0.1/index.js"
 pin "tweetnacl", to: "https://ga.jspm.io/npm:tweetnacl@1.0.3/nacl-fast.js"
 pin "u3", to: "https://ga.jspm.io/npm:u3@0.1.1/index.js"
+pin "bootstrap", to: "https://ga.jspm.io/npm:bootstrap@5.1.3/dist/js/bootstrap.esm.js"
+pin "@popperjs/core", to: "https://ga.jspm.io/npm:@popperjs/core@2.11.5/lib/index.js"

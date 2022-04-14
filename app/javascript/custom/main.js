@@ -1,24 +1,23 @@
 import { connect, Contract, keyStores, WalletConnection } from 'near-api-js';
 import getConfig from './config.js';
 
-function initContract(node_env) {
-    const nearConfig = getConfig(node_env || 'development', 'greeter.wabinab.testnet')
-    const near = await connect(Object.assign({ deps: { keyStore: new keyStores.BrowserLocalStorageKeyStore() } }, nearConfig));
 
-    window.nearConfig = nearConfig
-    window.near = near
+const nearConfig = getConfig('development', 'greeter.wabinab.testnet')
+const near = await connect(Object.assign({ deps: { keyStore: new keyStores.BrowserLocalStorageKeyStore() } }, nearConfig));
 
-    window.walletConnection = new WalletConnection(near)
+window.nearConfig = nearConfig
+window.near = near
 
-    window.accountId = window.walletConnection.getAccountId()
+window.walletConnection = new WalletConnection(near)
 
-    window.contract = await new Contract(window.walletConnection.account(), nearConfig.contractName, {
-      // View methods are read only. They don't modify the state, but usually return some value.
-      viewMethods: ['get_greeting'],
-      // Change methods can modify the state. But you don't receive the returned value when called.
-      changeMethods: ['set_greeting'],
-    })
-}
+window.accountId = window.walletConnection.getAccountId()
+
+window.contract = await new Contract(window.walletConnection.account(), nearConfig.contractName, {
+  // View methods are read only. They don't modify the state, but usually return some value.
+  viewMethods: ['get_greeting'],
+  // Change methods can modify the state. But you don't receive the returned value when called.
+  changeMethods: ['set_greeting'],
+})
 
 
 function logout() {
@@ -36,6 +35,11 @@ function login() {
 }
 
 
-window.initContract = initContract
+function set_greeting(message) {
+  window.contract.set_greeting({"message": message});
+}
+
+
+// window.initContract = initContract
 window.logout = logout
 window.login = login

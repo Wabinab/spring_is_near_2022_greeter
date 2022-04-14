@@ -13,7 +13,8 @@
   <body>
     <%= render 'layouts/header' %>
 
-    <%= javascript_tag "javascript::initContract(#{Rails.env})" %>
     <%= yield %>
+
+    <%= simple_format debug(params).to_yaml if Rails.env.development? %>
   </body>
 </html>
