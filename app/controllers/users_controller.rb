@@ -1,3 +1,5 @@
+# Requires more test cases. Haven't understand how to test properly, though. 
+
 class UsersController < ApplicationController
   def new
     @user = User.new
@@ -7,24 +9,38 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
   end
 
+  def index
+    @user = User.find_by(account_id: search_params[:account_id])
+    redirect_to "/users/#{@user.id}"
+  end
+  
+
   def create 
     @user = User.new(user_params)
 
     @myparam = user_params[:account_id]
 
-    @user.save 
+    if @user.save 
+      # Unfortunately cannot take out this repeat. Only after save we can search. 
+      @user =  User.find_by(account_id: user_params[:account_id])
+    else
+      @user =  User.find_by(account_id: user_params[:account_id])
+      @user.public_key = user_params[:public_key]
+      @user.all_keys = user_params[:all_keys]
+      @user.save
+    end
 
-    # Supposed to be "redirect_to user_url(@user)", but one got back /user.1 
-    # instead of /users/1 which user_url should give the latter. Hopefully
-    # this is just an error on my machine rather than some alien error. 
+    redirect_to "/users/#{@user.id}"
     
-    @id =  User.find_by(account_id: user_params[:account_id]).id
-    redirect_to "/users/#{@id}"
   end
 
   private 
 
     def user_params 
       params.require(:user).permit(:account_id, :public_key, :all_keys)
+    end
+
+    def search_params 
+      params.require(:user).permit(:account_id)
     end
 end

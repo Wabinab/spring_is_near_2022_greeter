@@ -36,10 +36,23 @@ function login() {
 
 
 function set_greeting(message) {
-  window.contract.set_greeting({"message": message});
+  var message = document.getElementById("form_message").value;
+  window.contract.set_greeting({"message": message})
+  .then(
+    value => window.location.reload(),
+    err => alert("There is an error."),
+  );
+}
+
+function fake_greeting() {
+  var message = document.getElementById("form_message").value; 
+  console.log(message);
+  alert(message);
 }
 
 
 // window.initContract = initContract
+window.set_greeting = set_greeting
+window.fake_greeting = fake_greeting
 window.logout = logout
 window.login = login

@@ -1,8 +1,48 @@
+<% define_constants %>
+
 <div class="row">
-  <aside class="justify-content-md-center">
+  <div class="col text-center">
     <h1>
       <%= gravatar_for @user %>
       <%= @user.account_id %>
     </h1>
-  </aside>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col text-center">
+    <h2>Greetings: <%= get_greeting @user %></h2>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col text-center">
+    <h3>Change your greetings here: </h3>
+
+    <%= form_with(model: @user, local: false) do |f| %>
+      <%= f.text_field '', placeholder: 'message', id: "form_message" %>
+      <%= link_to "Submit", "javascript:set_greeting()", class: "btn btn-primary" %>
+    <% end %>
+
+    <h5>
+      The button doesn't freeze, but it's processing transaction. 
+      Haven't learnt how to freeze button yet though. Multiple clicks
+      will make multiple transactions (hence unsafe). 
+    </h5>
+    
+    <p>Ahem Ahem... if result not seen, try reload the page 
+    after set to see the result... Sorry for the inconvenience.</p>
+
+    <p>
+      If the message isn't correct, check window.walletConnection: most probably 
+      you haven't log out of the previous one before logging in to this one. 
+      Immediately logging in doesn't override window.walletConnection. 
+    </p>
+
+    <p>
+      The last error is RPC isn't working currently. You can see this if you open 
+      browser console and see "Retrying transaction ___ with a new nonce"... Until the
+      retry successful, you can reload the page thereafter. 
+    </p>
+  </div>
 </div>
