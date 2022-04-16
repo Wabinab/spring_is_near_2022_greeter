@@ -26,4 +26,15 @@ module UsersHelper
       }
     )["result"]["result"].pack('c*')
   end
+
+  def get_others_set_greeting(user)
+    account_id = user.account_id
+    @query.function(
+      @contract,
+      'get_others_set_greeting',
+      {
+        "account_id": account_id
+      }
+    )["result"]["result"].pack('c*')
+  end
 end

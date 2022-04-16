@@ -16,7 +16,7 @@ window.contract = await new Contract(window.walletConnection.account(), nearConf
   // View methods are read only. They don't modify the state, but usually return some value.
   viewMethods: ['get_greeting'],
   // Change methods can modify the state. But you don't receive the returned value when called.
-  changeMethods: ['set_greeting'],
+  changeMethods: ['set_greeting', 'set_greeting_for_others'],
 })
 
 
@@ -35,24 +35,42 @@ function login() {
 }
 
 
-function set_greeting(message) {
+function set_greeting() {
   var message = document.getElementById("form_message").value;
   window.contract.set_greeting({"message": message})
   .then(
-    value => window.location.reload(),
+    value => {
+      alert("Successful set_greeting for yourself.");
+      window.location.reload();
+    },
     err => alert("There is an error."),
   );
 }
 
-function fake_greeting() {
-  var message = document.getElementById("form_message").value; 
-  console.log(message);
-  alert(message);
+// function fake_greeting() {
+//   var message = document.getElementById("form_message").value; 
+//   console.log(message);
+//   alert(message);
+// }
+
+
+function set_greeting_for_others(target) {
+  var message = document.getElementById("someone_message").value;
+  window.contract.set_greeting_for_others({
+    "target": target,
+    "message": message
+  }).then(
+    value => {
+      alert("Successful called set_greeting_for_others.");
+      window.location.reload();
+    },
+    err => alert("There's an error."),
+  );
 }
 
 
 // window.initContract = initContract
 window.set_greeting = set_greeting
-window.fake_greeting = fake_greeting
+// window.fake_greeting = fake_greeting
 window.logout = logout
 window.login = login

@@ -12,19 +12,27 @@
 <div class="row">
   <div class="col text-center">
     <h2>Greetings: <%= get_greeting @user %></h2>
+    <h2>Someone else greetings: <%= get_others_set_greeting @user %></h2>
   </div>
 </div>
 
 <div class="row">
-  <div class="col text-center">
-    <h3>Change your greetings here: </h3>
+  <div class="col text-center gap-6">
+    <h3 class="p-3">Change your greetings here: </h3>
 
-    <%= form_with(model: @user, local: false) do |f| %>
+    <%= form_with(model: @user, local: false, class: "p-3") do |f| %>
+      <%= f.label "Set your own greeting here:" %>
       <%= f.text_field '', placeholder: 'message', id: "form_message" %>
       <%= link_to "Submit", "javascript:set_greeting()", class: "btn btn-primary" %>
     <% end %>
 
-    <h5>
+    <%= form_with(model: @user, local: false, class: "p-3") do |f| %>
+      <%= f.label "Set someone else's greeting here:" %>
+      <%= f.text_field '', placeholder: 'message', id: "someone_message" %>
+      <%= link_to "Submit", "javascript:set_greeting_for_others(#{@user.account_id})", class: "btn btn-secondary" %>
+    <% end %>
+
+    <h5 class="p-4">
       The button doesn't freeze, but it's processing transaction. 
       Haven't learnt how to freeze button yet though. Multiple clicks
       will make multiple transactions (hence unsafe). 
