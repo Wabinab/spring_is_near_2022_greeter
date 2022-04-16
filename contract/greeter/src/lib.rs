@@ -127,12 +127,13 @@ mod tests {
     #[test]
     fn test_set_greeting_from_others_and_get() {
       let context = get_context(false);
+      let current_id: String = context.current_account_id.clone();
       testing_env!(context);
 
       let target: AccountId = "francis_near".parse().unwrap();
 
       let mut contract = Welcome::default();
-      contract.set_greeting_for_others(target, "NEAR".to_owned());
+      contract.set_greeting_for_others(target.clone(), "NEAR".to_owned());
 
       assert_eq!(
         "NEAR".to_owned(),
@@ -141,7 +142,7 @@ mod tests {
 
       assert_ne!(
         "NEAR".to_owned(),
-        contract.get_others_set_greeting(context.signer_account_id())
+        contract.get_others_set_greeting(current_id.parse().unwrap())
       );
     }
 }
