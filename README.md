@@ -22,6 +22,12 @@ The first run you'll have an error `KeyNotFound` for the first command. That's *
 
 Remember to change the frontend contract to redirect to your contract (and one mine) if you're calling to your subaccount/account. 
 
+# Learnings
+
+One actually learn lots of things! Things don't work as one expected them to, but oh well... 
+
+And one is still learning how to write in Ruby on Rails... 
+
 ### References
 - `npx create-app --contract=Rust` for Greeter app in Rust; but we upgrade it to v4.0.0-pre.4. 
 - https://read.cash/@wabinab/near-api-js-with-rails-7-c749d832
