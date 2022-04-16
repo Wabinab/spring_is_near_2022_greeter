@@ -1,5 +1,5 @@
 use near_sdk::borsh::{self, BorshDeserialize, BorshSerialize};
-use near_sdk::{env, near_bindgen, AccountId};
+use near_sdk::{env, near_bindgen, AccountId, require};
 use near_sdk::collections::LookupMap;
 
 
@@ -57,6 +57,11 @@ impl Welcome {
       message: String,
     ) {
       let signer = env::signer_account_id();
+
+      require!(
+        signer != target,
+        "Only others can set a greeting for you."
+      );
 
       env::log_str(
         format!(
@@ -127,7 +132,7 @@ mod tests {
     #[test]
     fn test_set_greeting_from_others_and_get() {
       let context = get_context(false);
-      let current_id: String = context.current_account_id.clone();
+      let signer_id: String = context.signer_account_id.clone();
       testing_env!(context);
 
       let target: AccountId = "francis_near".parse().unwrap();
@@ -142,7 +147,18 @@ mod tests {
 
       assert_ne!(
         "NEAR".to_owned(),
-        contract.get_others_set_greeting(current_id.parse().unwrap())
+        contract.get_others_set_greeting(signer_id.parse().unwrap())
       );
+    }
+
+    #[test]
+    #[should_panic(expected = "Only others can set a greeting for you.")]
+    fn test_cannot_set_greeting_for_ourselves() {
+      let context = get_context(false);
+      let target: AccountId = context.signer_account_id.clone().parse().unwrap();
+      testing_env!(context);
+
+      let mut contract = Welcome::default();
+      contract.set_greeting_for_others(target, "Howdy".to_owned());
     }
 }
