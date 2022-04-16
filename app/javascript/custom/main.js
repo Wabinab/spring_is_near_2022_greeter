@@ -43,7 +43,7 @@ function set_greeting() {
       alert("Successful set_greeting for yourself.");
       window.location.reload();
     },
-    err => alert("There is an error."),
+    err => alert(err),
   );
 }
 
@@ -64,13 +64,14 @@ function set_greeting_for_others(target) {
       alert("Successful called set_greeting_for_others.");
       window.location.reload();
     },
-    err => alert("There's an error."),
+    err => alert(err),
   );
 }
 
 
 // window.initContract = initContract
 window.set_greeting = set_greeting
+window.set_greeting_for_others = set_greeting_for_others
 // window.fake_greeting = fake_greeting
 window.logout = logout
 window.login = login
